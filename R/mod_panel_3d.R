@@ -9,7 +9,7 @@
 mod_panel_3d_ui <- function(id){
   ns <- NS(id)
   tagList(
-    rglwidget::rglwidgetOutput(ns("PLOT3D"), height = '400px')
+    rgl::rglwidgetOutput(ns("PLOT3D"), height = '400px')
   )
 }
 

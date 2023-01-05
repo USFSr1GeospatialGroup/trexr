@@ -33,7 +33,9 @@ mod_panel_stats_server <- function(input, output, session, in_ras, clear_map, va
 
     if(is.null(in_ras$ras_crop)){
 
-  in_ras$area_ha <- (raster::ncell(in_ras$chmR)*raster::res(in_ras$chmR)[1]^2)/10000
+  cells <- abs(raster::ncell(in_ras$chmR)-sum(is.na(in_ras$chmR[])))
+  in_ras$area_ha <- (cells*raster::res(in_ras$chmR)[1]^2)/10000
+
   chm_hts<-in_ras$chmR[!is.na(in_ras$chmR)]
 
   output$summary <- shiny::renderTable({
@@ -58,7 +60,9 @@ mod_panel_stats_server <- function(input, output, session, in_ras, clear_map, va
 
     } else {
 
-      in_ras$area_ha <- (raster::ncell(in_ras$ras_crop)*raster::res(in_ras$ras_crop)[1]^2)/10000
+
+      cells <- abs(raster::ncell(in_ras$ras_crop)-sum(is.na(in_ras$ras_crop[])))
+      in_ras$area_ha <- (cells*raster::res(in_ras$ras_crop)[1]^2)/10000
       chm_hts<-in_ras$ras_crop[!is.na(in_ras$ras_crop)]
 
       output$summary <- shiny::renderTable({
@@ -88,7 +92,9 @@ mod_panel_stats_server <- function(input, output, session, in_ras, clear_map, va
 
   observeEvent(in_ras$rec_feat, {
 
-    in_ras$area_ha <- (raster::ncell(in_ras$ras_crop)*raster::res(in_ras$ras_crop)[1]^2)/10000
+
+    cells <- abs(raster::ncell(in_ras$ras_crop)-sum(is.na(in_ras$ras_crop[])))
+    in_ras$area_ha <- (cells*raster::res(in_ras$ras_crop)[1]^2)/10000
     chm_hts<-in_ras$ras_crop[!is.na(in_ras$ras_crop)]
 
     output$summary <- shiny::renderTable({
